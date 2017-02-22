@@ -1060,6 +1060,11 @@ class WP_REST_Posts_Controller extends WP_REST_Controller {
 			return false;
 		}
 
+		$filter = apply_filters( 'rest_check_post_read_permission', true, $post );
+		if ( ! $filter ) {
+			return false;
+		}
+
 		// Can we read the post?
 		if ( 'publish' === $post->post_status || current_user_can( $post_type->cap->read_post, $post->ID ) ) {
 			return true;
